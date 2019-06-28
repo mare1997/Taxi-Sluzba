@@ -1,0 +1,100 @@
+package gui.prikaz;
+
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
+import javax.swing.JOptionPane;
+
+import entiteti.osoba.Vozac;
+import entiteti.voznja.Voznja;
+import gui.dodavanjeIzmena.KilometrazaDodavanje;
+import gui.dodavanjeIzmena.TipObrade;
+import taksi_sluzba.TaksiSluzba;
+import utils.Pretraga;
+
+public class PrikazVoznjiVozac extends PrikazVoznji {
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
+	private TaksiSluzba taksiSluzba;
+
+	public PrikazVoznjiVozac(TaksiSluzba taksiSluzba) {
+		super(taksiSluzba);
+		this.taksiSluzba = taksiSluzba;
+		initAkcija();
+	}
+
+	private void initAkcija() {
+		btnPlus.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				JOptionPane.showMessageDialog(null, "Nemate pristup zeljenoj funkciji.");
+			}
+		});
+
+		btnMinus.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				JOptionPane.showMessageDialog(null, "Nemate pristup zeljenoj funkciji.");
+
+			}
+		});
+
+		btnChange.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				selektovanRed = tabela.getSelectedRow();
+				if (selektovanRed == -1) {
+					JOptionPane.showMessageDialog(null, "Morate selektovati red");
+				} else {
+					String id = (String) tabela.getValueAt(selektovanRed, 0);
+					Voznja voznja = Pretraga.pronadjiVoznju(taksiSluzba, id);
+					if (voznja != null) {
+						if (taksiSluzba.getUlogovan() instanceof Vozac
+								&& voznja.getVozac() == (Vozac) taksiSluzba.getUlogovan()) {
+							KilometrazaDodavanje kmD = new KilometrazaDodavanje(voznja, PrikazVoznjiVozac.this,
+									taksiSluzba, TipObrade.IZMENA);
+							kmD.setVisible(true);
+						} else {
+							JOptionPane.showMessageDialog(null, "Nemate pristup zeljenoj funkciji");
+						}
+					} else {
+						JOptionPane.showMessageDialog(null, "Greska prilikom pretrage.");
+					}
+				}
+			}
+		});
+
+		btnTaxi.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				selektovanRed = tabela.getSelectedRow();
+				if (selektovanRed == -1) {
+					JOptionPane.showMessageDialog(null, "Morate selektovati red.");
+				} else {
+					String id = (String) tabela.getValueAt(selektovanRed, 0);
+					Voznja voznja = Pretraga.pronadjiVoznju(taksiSluzba, id);
+					if (voznja != null) {
+						if (voznja.getVozac() == null) {
+							KilometrazaDodavanje kd = new KilometrazaDodavanje(voznja, PrikazVoznjiVozac.this,
+									taksiSluzba, TipObrade.DODAVANJE);
+							kd.setVisible(true);
+						} else {
+							JOptionPane.showMessageDialog(null, "Nije moguce preuzeti voznju");
+						}
+					} else {
+						JOptionPane.showMessageDialog(null, "Greska prilikom pretrage.");
+					}
+
+				}
+			}
+		});
+	}
+}

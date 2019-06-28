@@ -1,0 +1,96 @@
+package entiteti.voznja;
+
+import java.util.Date;
+
+import entiteti.osoba.Musterija;
+import entiteti.osoba.Vozac;
+
+public abstract class Voznja {
+
+	protected int id;
+	protected Date datumVreme;
+	protected String adresaPolaska;
+	protected Musterija musterija;
+	protected Vozac vozac;
+	protected double kilometraza;
+	protected double cena;
+	protected final int start = 90;
+	protected final int cenaKm = 70;
+
+	public Voznja() {
+		super();
+	}
+
+	public Voznja(int id, Date datumVreme, String adresaPolaska, Musterija musterija, Vozac vozac, double kilometraza,
+			double cena) {
+		super();
+		this.id = id;
+		this.datumVreme = datumVreme;
+		this.adresaPolaska = adresaPolaska;
+		this.musterija = musterija;
+		this.vozac = vozac;
+		this.kilometraza = kilometraza;
+		this.cena = cena;
+	}
+
+	public int getId() {
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
+	}
+
+	public void izracunajCenu() {
+		this.cena = this.start + (this.kilometraza * this.cenaKm);
+	}
+
+	public double getKilometraza() {
+		return kilometraza;
+	}
+
+	public void setKilometraza(double kilometraza) {
+		this.kilometraza = kilometraza;
+	}
+
+	public double getCena() {
+		return cena;
+	}
+
+	public void setCena(double cena) {
+		this.cena = cena;
+	}
+
+	public Date getDatumVreme() {
+		return datumVreme;
+	}
+
+	public void setDatumVreme(Date datumVreme) {
+		this.datumVreme = datumVreme;
+	}
+
+	public String getAdresaPolaska() {
+		return adresaPolaska;
+	}
+
+	public void setAdresaPolaska(String adresaPolaska) {
+		this.adresaPolaska = adresaPolaska;
+	}
+
+	public Musterija getMusterija() {
+		return musterija;
+	}
+
+	public void setMusterija(Musterija musterija) {
+		this.musterija = musterija;
+	}
+
+	public Vozac getVozac() {
+		return vozac;
+	}
+
+	public void setVozac(Vozac vozac) {
+		this.vozac = vozac;
+	}
+
+}

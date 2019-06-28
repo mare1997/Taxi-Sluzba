@@ -1,0 +1,86 @@
+package gui.prikaz;
+
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
+import javax.swing.JOptionPane;
+
+import entiteti.osoba.Musterija;
+import entiteti.voznja.Voznja;
+import gui.dodavanjeIzmena.DodavanjeIzmenaMusterija;
+import gui.dodavanjeIzmena.TipObrade;
+import taksi_sluzba.TaksiSluzba;
+import utils.Pretraga;
+
+public class PrikazVoznjiMusterija extends PrikazVoznji {
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
+	private TaksiSluzba taksiSluzba;
+
+	public PrikazVoznjiMusterija(TaksiSluzba taksiSluzba) {
+		super(taksiSluzba);
+		this.taksiSluzba = taksiSluzba;
+		initAkcija();
+	}
+
+	private void initAkcija() {
+		btnPlus.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				if (((Musterija) taksiSluzba.getUlogovan()).getMobapp()) {
+					DodavanjeIzmenaMusterija diM1 = new DodavanjeIzmenaMusterija(taksiSluzba, null,
+							PrikazVoznjiMusterija.this, TipObrade.DODAVANJE);
+					diM1.setVisible(true);
+				}
+			}
+		});
+
+		btnMinus.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				JOptionPane.showMessageDialog(null, "Nemate pristup zeljenoj funkciji.");
+
+			}
+		});
+
+		btnChange.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				selektovanRed = tabela.getSelectedRow();
+				if (selektovanRed == -1) {
+					JOptionPane.showMessageDialog(null, "Morate selektovati red");
+				} else {
+					String id = (String) tabela.getValueAt(selektovanRed, 0);
+					Voznja voznja = Pretraga.pronadjiVoznju(taksiSluzba, id);
+					if (voznja != null) {
+						if (taksiSluzba.getUlogovan() instanceof Musterija && voznja.getVozac() == null) {
+							DodavanjeIzmenaMusterija diM1 = new DodavanjeIzmenaMusterija(taksiSluzba, voznja,
+									PrikazVoznjiMusterija.this, TipObrade.IZMENA);
+							diM1.setVisible(true);
+						} else {
+							JOptionPane.showMessageDialog(null, "Nemate pristup zeljenoj funkciji");
+						}
+					} else {
+						JOptionPane.showMessageDialog(null, "Greska prilikom pretrage.");
+					}
+				}
+			}
+		});
+
+		btnTaxi.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				JOptionPane.showMessageDialog(null, "Nemate pristup datoj funkciji.");
+
+			}
+		});
+	}
+}

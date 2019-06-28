@@ -1,0 +1,31 @@
+package entiteti.voznja;
+
+import java.util.Date;
+
+import entiteti.osoba.Dispecer;
+import entiteti.osoba.Musterija;
+import entiteti.osoba.Vozac;
+
+public class TelefonskiPoziv extends Voznja {
+
+	private Dispecer dispecer;
+
+	public TelefonskiPoziv() {
+		super();
+	}
+
+	public TelefonskiPoziv(int id, Date datumVreme, String adresaPolaska, Musterija musterija, Vozac vozac,
+			Dispecer dispecer, double km, double cena) {
+		super(id, datumVreme, adresaPolaska, musterija, vozac, km, cena);
+		this.dispecer = dispecer;
+	}
+
+	public Dispecer getDispecer() {
+		return dispecer;
+	}
+
+	public void setDispecer(Dispecer dispecer) {
+		this.dispecer = dispecer;
+	}
+
+}

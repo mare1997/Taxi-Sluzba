@@ -1,0 +1,3 @@
+Nela|Milojevic|2303996785041|Dimitrija Tucovica 34|1|0648527610|cikepike|cikepike96|true
+Marija|Sopalovic|2908996795014|Mackatska 18|1|0659863217|mara|mara96|false
+Marko|Cvijovic|504996790036|Sevojno 18|2|0643664706|marezvija|marezvija|true
